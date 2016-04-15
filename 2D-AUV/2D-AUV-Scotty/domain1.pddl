@@ -1,0 +1,62 @@
+(define (domain auv-2D-1)
+(:requirements :typing :durative-actions :fluents :duration-inequalities)
+
+(:predicates
+	(sample-taken)
+    (can-move)
+)
+(:functions 
+	(x) (y)
+)
+
+(:durative-action glide
+:control-variables (and 
+						(vel-x -2 2)
+						(vel-y -2 2)
+						)
+
+:duration (and (>= ?duration 0.1) (<= ?duration 200))
+:condition (and 
+			 (at start (can-move))
+				(over all (<= ((x)) (1) 100))
+				(over all (>= ((x)) (1) 0))
+				(over all (<= ((y)) (1) 100))
+				(over all (>= ((y)) (1) 0))
+			)
+	    
+:effect (and
+			 (at start (not (can-move)))
+			 (at end (can-move))
+			(increase (x) (vel-x))
+			(increase (y) (vel-y))
+			)
+)
+
+
+(:durative-action take-sampleA
+:parameters()
+:duration (and (>= ?duration 2) (<= ?duration 8))
+:condition (and (at start (can-move))
+                (at start (>= ((x)) (1) 80))
+                (at start (<= ((x)) (1) 90))
+                (at start (>= ((y)) (1) 70))
+                (at start (<= ((y)) (1) 80))
+
+                (over all (>= ((x)) (1) 80))
+                (over all (<= ((x)) (1) 90))
+                (over all (>= ((y)) (1) 70))
+                (over all (<= ((y)) (1) 80))
+
+                (at end (>= ((x)) (1) 80))
+                (at end (<= ((x)) (1) 90))
+                (at end (>= ((y)) (1) 70))
+                (at end (<= ((y)) (1) 80))
+            )
+:effect (and    (at start (not (can-move)))
+                (at end (can-move))
+            (at end (sample-taken)) 
+
+            ))
+
+
+)
