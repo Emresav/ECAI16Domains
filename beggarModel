@@ -1,0 +1,20 @@
+/* Objective function */
+max: change;
+
+/* Variable bounds */
+inpocket = 2;
+balance = 50;
+cash >= 5;
+cash <= balance;
+
+inpocket1 = inpocket + cash;
+balance1 = balance - cash;
+
+inpocket2 = inpocket1 - 5;
+change >= 1;
+change <= inpocket2;
+
+inpocket3 = inpocket2 - change;
+inpocket3 >= 20;
+/*decisions*/
+cash = 30;
